@@ -32,6 +32,11 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
+    @GetMapping("byColor/{color}")
+    public Collection<Faculty> getFacultyByColor(@PathVariable String color) {
+        return facultyService.findFacultyByColor(color);
+    }
+
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.createFaculty(faculty);

@@ -6,6 +6,8 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/student")
@@ -29,6 +31,11 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
+    }
+
+    @GetMapping("byAge/{age}")
+    public Collection<Student> getStudentByAge(@PathVariable int age) {
+        return studentService.findStudentByAge(age);
     }
 
     @PostMapping
