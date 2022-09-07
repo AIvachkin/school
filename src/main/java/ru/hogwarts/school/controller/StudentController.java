@@ -33,8 +33,8 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("byAge/{age}")
-    public Collection<Student> getStudentByAge(@PathVariable int age) {
+    @GetMapping("/age")
+    public Collection<Student> getStudentByAge(@RequestParam int age) {
         return studentService.findStudentByAge(age);
     }
 
@@ -43,9 +43,9 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
-    @PutMapping
-    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-        Student foundStudent = studentService.editStudent(student);
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> editStudent(@PathVariable Long id, @RequestBody Student student) {
+        Student foundStudent = studentService.editStudent(id, student);
         if (foundStudent == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -53,8 +53,11 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public Student deleteStudent(@PathVariable Long id) {
-        return studentService.deleteStudent(id);
+//    public Student deleteStudent(@PathVariable Long id) {
+//        return studentService.deleteStudent(id);
+//    }
+    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
     }
-
 }

@@ -25,15 +25,15 @@ public class FacultyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
-        Faculty faculty = facultyService.findStFaculty(id);
+        Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("byColor/{color}")
-    public Collection<Faculty> getFacultyByColor(@PathVariable String color) {
+    @GetMapping("/color")
+    public Collection<Faculty> getFacultyByColor(@RequestParam String color) {
         return facultyService.findFacultyByColor(color);
     }
 
@@ -42,9 +42,9 @@ public class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-    @PutMapping
-    public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
-        Faculty foundFaculty = facultyService.editFaculty(faculty);
+    @PutMapping("/{id}")
+    public ResponseEntity<Faculty> editFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
+        Faculty foundFaculty = facultyService.editFaculty(id, faculty);
         if (foundFaculty == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -52,7 +52,8 @@ public class FacultyController {
     }
 
     @DeleteMapping("/{id}")
-    public Faculty deleteFaculty(@PathVariable Long id) {
-        return facultyService.deleteFaculty(id);
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
+        facultyService.deleteFaculty(id);
+        return ResponseEntity.ok().build();
     }
 }
