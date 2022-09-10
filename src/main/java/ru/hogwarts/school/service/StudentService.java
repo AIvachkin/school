@@ -31,8 +31,12 @@ public class StudentService {
     }
 
     public Student editStudent(long id, Student student) {
-        if (studentRepository.findById(id).isPresent()) {
-            return studentRepository.save(student);
+        Optional <Student> optional = studentRepository.findById(id);
+        if (optional.isPresent()) {
+            Student fromDB = optional.get();
+            fromDB.setName(student.getName());
+            fromDB.setAge(student.getAge());
+            return studentRepository.save(fromDB);
         }
         return null;
     }
@@ -45,7 +49,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Collection<Student> findStudentByAge(int age) {
+    public List<Student> findStudentByAge(int age) {
         return studentRepository.findByAge(age);
     }
 }

@@ -38,6 +38,27 @@ public class StudentController {
         return studentService.findStudentByAge(age);
     }
 
+
+//    Единый запрос по возрасту и id
+//    @GetMapping()
+//    public ResponseEntity getStudentByAgeOrById(@RequestParam(required = false) int age,
+//                                                @RequestParam(required = false) Long id) {
+//        if (age > 0) {
+//            List<Student> foundStudentByAge = studentService.findStudentByAge(age);
+//            if (!foundStudentByAge.isEmpty()) {
+//                return ResponseEntity.ok(foundStudentByAge);
+//            }
+//        }
+//
+//        Student foundStudentById = studentService.findStudent(id);
+//        if (foundStudentById == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(foundStudentById);
+//
+//
+//    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);

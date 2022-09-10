@@ -8,22 +8,19 @@ import org.springframework.stereotype.Repository;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public interface FacultyRepository extends JpaRepository<Faculty, Long>
-//        QuerydslBinderCustomizer<QUser>,
-//        QuerydslPredicateExecutor<Faculty>
-{
+public interface FacultyRepository extends JpaRepository<Faculty, Long> {
 
-//    @Override
-//    default void customize (QuerydslBindings bindings, QUser faculty){
-//
+    List<Faculty> findByColor(String color);
+
+
+
+//    default Collection<Faculty> findByColor(String color) {
+//        return findAll().stream()
+//                .filter(faculty -> faculty.getColor().equals(color))
+//                .collect(Collectors.toList());
 //    }
-
-    default Collection<Faculty> findByColor(String color) {
-        return findAll().stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .collect(Collectors.toList());
-    }
 }
