@@ -19,7 +19,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<Collection<Student>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
@@ -33,8 +33,8 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/age")
-    public Collection<Student> getStudentByAge(@RequestParam int age) {
+    @GetMapping()
+    public Collection<Student> getStudentByAge(@RequestParam Integer age) {
         return studentService.findStudentByAge(age);
     }
 

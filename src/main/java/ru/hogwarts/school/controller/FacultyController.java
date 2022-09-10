@@ -18,7 +18,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<Collection<Faculty>> getAllFaculties() {
         return ResponseEntity.ok(facultyService.getAllFaculty());
     }
@@ -32,7 +32,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("/color")
+    @GetMapping()
     public Collection<Faculty> getFacultyByColor(@RequestParam String color) {
         return facultyService.findFacultyByColor(color);
     }

@@ -1,8 +1,11 @@
 package ru.hogwarts.school.model;
 
+import com.querydsl.core.types.EntityPath;
+
 import javax.annotation.processing.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
@@ -10,16 +13,20 @@ import java.util.Objects;
 public class Faculty {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String color;
 
-//    public Faculty(long id, String name, String color) {
-//        this.id = id;
-//        this.name = name;
-//        this.color = color;
-//    }
+    public Faculty(long id, String name, String color) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+    }
+
+    public Faculty(){
+
+    }
 
     public long getId() {
         return id;
