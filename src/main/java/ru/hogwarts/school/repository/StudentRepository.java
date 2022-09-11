@@ -14,11 +14,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     List<Student> findByAge(int age);
 
-//    default Collection<Student> findByAge(int age) {
-//
-//        return findAll().stream()
-//                .filter(student -> student.getAge() == age)
-//                .collect(Collectors.toList());
-//
-//    }
+    List<Student> findByAgeBetween (int ageMin, int ageMax);
+
+    List<Student> findByFaculty_Id (Long facultyId);
+
+
 }
