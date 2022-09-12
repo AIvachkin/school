@@ -45,9 +45,9 @@ public class StudentController {
         return studentService.findStudentByAgeBetween(ageMin, ageMax);
     }
 
-    @GetMapping("/faculty")
-    public List<Student> getStudentsByFaculty(@RequestParam Long idFaculty) {
-        return studentService.findStudentsByFaculty(idFaculty);
+    @GetMapping("/{id}/faculty")
+    public List<Student> getStudentsByFaculty(@PathVariable Long id) {
+        return studentService.findStudentsByFaculty(id);
     }
 
 //    Единый запрос по возрасту и id

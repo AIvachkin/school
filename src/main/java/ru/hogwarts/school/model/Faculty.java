@@ -19,6 +19,13 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private List<Student> student;
 
+    public List<Student> getStudent() {
+        return student;
+    }
+
+    public void setStudent(List<Student> student) {
+        this.student = student;
+    }
 
     public Faculty(long id, String name, String color) {
         this.id = id;

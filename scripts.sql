@@ -1,10 +1,10 @@
 select *from student
-where age < 39 AND age >22 ;
+where age between 22 AND 39;
 
 select student.name from student;
 
 select *from student
-where name LIKE ('%g%');
+where name LIKE '%g%';
 
 select *from student
 where student.age < student.id;
