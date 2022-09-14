@@ -43,9 +43,14 @@ public class FacultyController {
         return facultyService.findFacultyByColorOrName(colorOrName);
     }
 
+//    @GetMapping("/{id}/student")
+//    public Faculty getFacultyByStudent(@PathVariable Long id) {
+//        return facultyService.findFacultyByStudent(id);
+//    }
+
     @GetMapping("/{id}/student")
-    public Faculty getFacultyByStudent(@PathVariable Long id) {
-        return facultyService.findFacultyByStudent(id);
+    public List<Student> getStudentsByFaculty(@PathVariable Long id) {
+        return facultyService.findStudentsByFaculty(id);
     }
 
 //    @GetMapping("/idStudent")

@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.types.EntityPath;
 
 import javax.annotation.processing.Generated;
@@ -17,7 +18,9 @@ public class Faculty {
     private String color;
 
     @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
     private List<Student> student;
+
 
     public List<Student> getStudent() {
         return student;

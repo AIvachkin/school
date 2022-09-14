@@ -61,8 +61,8 @@ public class StudentService {
 //        return studentRepository.findByFaculty_Id(idStudent);
 //    }
 
-    public List<Student> findStudentsByFaculty (Long facultyId){
-        return studentRepository.findByFaculty_Id(facultyId);
+    public Faculty findFacultyByStudent (Long studentId){
+        return studentRepository.findStudentById(studentId).getFaculty();
     }
 }
 

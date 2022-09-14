@@ -71,8 +71,8 @@ public class FacultyService {
         return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(colorOrName, colorOrName);
     }
 
-    public Faculty findFacultyByStudent(Long id) {
-        return studentRepository.findStudentById(id).getFaculty();
+    public List<Student> findStudentsByFaculty(Long id) {
+        return facultyRepository.findFacultyById(id).getStudent();
     }
 
 
