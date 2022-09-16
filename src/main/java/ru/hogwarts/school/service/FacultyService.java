@@ -15,11 +15,10 @@ public class FacultyService {
 
     private final FacultyRepository facultyRepository;
 
-    private final StudentRepository studentRepository;
+//    private final StudentRepository studentRepository;
 
-    public FacultyService(FacultyRepository facultyRepository, StudentRepository studentRepository) {
+    public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
-        this.studentRepository = studentRepository;
     }
 
 //    public FacultyService(FacultyRepository facultyRepository) {
