@@ -21,13 +21,13 @@ public class StudentService {
     }
 
     public Student createStudent(Student student) {
-//        student.setId(++lastIdStudents);
+//        student.setId(null);
 //        students.put(student.getId(), student);
         return studentRepository.save(student);
     }
 
     public Student findStudent(long id) {
-        return studentRepository.findById(id).orElse(null);
+        return studentRepository.findById(id).orElseThrow();
     }
 
     public Student editStudent(long id, Student student) {
@@ -50,7 +50,7 @@ public class StudentService {
     }
 
     public List<Student> findStudentByAge(int age) {
-        return studentRepository.findByAge(age);
+        return studentRepository.findAllByAge(age);
     }
 
     public List<Student> findStudentByAgeBetween(int ageMin, int ageMax){

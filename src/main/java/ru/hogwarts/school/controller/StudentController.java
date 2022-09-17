@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -35,8 +36,11 @@ public class StudentController {
     }
 
     @GetMapping()
-    public Collection<Student> getStudentByAge(@RequestParam Integer age) {
-        return studentService.findStudentByAge(age);
+    public ResponseEntity<Collection<Student>> getStudentByAge(@RequestParam(required = false) Integer age) {
+        if (age > 0) {
+            return ResponseEntity.ok(studentService.findStudentByAge(age));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
     }
 
     @GetMapping("/ageBetween")
