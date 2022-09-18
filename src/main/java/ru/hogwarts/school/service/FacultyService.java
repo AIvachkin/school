@@ -30,7 +30,7 @@ public class FacultyService {
     }
 
     public Faculty findFaculty(long id) {
-        return facultyRepository.findById(id).orElse(null);
+        return facultyRepository.findFacultyById(id);
     }
 
     public Faculty editFaculty(long id, Faculty faculty) {

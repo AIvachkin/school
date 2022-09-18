@@ -19,7 +19,12 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +45,70 @@ public class SchoolApplicationWithMockTest {
     private FacultyController facultyController;
 
     @Test
+    public void testFaculties() throws Exception {
+        final long id = 1;
+        final String name = "Tree";
+        final String color = "green";
+
+
+        Faculty faculty = new Faculty(id, name, color);
+        List<Faculty> facultyList = List.of(faculty);
+
+        JSONObject facultyObject = new JSONObject();
+        facultyObject.put("id", id);
+        facultyObject.put("name", name);
+        facultyObject.put("color", color);
+
+
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
+        when(facultyRepository.findFacultyById(eq(id))).thenReturn(faculty);
+        when(facultyRepository.findById(eq(id))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.findByColor(eq(color))).thenReturn(facultyList);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/faculty")
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/faculty/" + id)
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty/" + id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty?color=" + color)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(id))
+                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].color").value(color));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/faculty/" + id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
     public void saveFacultyTest() throws Exception {
         long id = 1L;
         String name = "Fire";
@@ -48,7 +117,7 @@ public class SchoolApplicationWithMockTest {
         JSONObject facultyObject = new JSONObject();
         facultyObject.put(name, color);
 
-        Faculty faculty = new Faculty() ;
+        Faculty faculty = new Faculty();
         faculty.setId(id);
         faculty.setName(name);
         faculty.setColor(color);
@@ -77,7 +146,7 @@ public class SchoolApplicationWithMockTest {
         JSONObject facultyObject = new JSONObject();
         facultyObject.put(name, color);
 
-        Faculty faculty = new Faculty() ;
+        Faculty faculty = new Faculty();
         faculty.setId(id);
         faculty.setName(name);
         faculty.setColor(color);
