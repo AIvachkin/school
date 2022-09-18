@@ -19,7 +19,7 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa:5.0.0'
 	implementation 'com.querydsl:querydsl-core:5.0.0'
 
-	runtimeOnly 'org.postgresql:postgresql:42.4.1'
+    runtimeOnly 'org.postgresql:postgresql:42.4.1'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
