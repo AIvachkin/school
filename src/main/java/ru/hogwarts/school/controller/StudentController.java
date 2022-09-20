@@ -1,7 +1,9 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -79,10 +81,19 @@ public class StudentController {
 //
 //    }
 
+//    @PostMapping
+//    public Student createStudent(@RequestBody Student student) {
+//        return studentService.createStudent(student);
+//    }
+
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        if (student.getId() !=  0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id must be empty!");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Student> editStudent(@PathVariable Long id, @RequestBody Student student) {

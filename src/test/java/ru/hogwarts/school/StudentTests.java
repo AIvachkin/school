@@ -50,7 +50,7 @@ public class StudentTests {
         final int age = 21;
         final long id = 1;
 
-        Student student = new Student(id, name, age);
+        Student student = new Student(name, age);
 
         JSONObject studentObject = new JSONObject();
         studentObject.put("id", id);

@@ -22,4 +22,6 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     Faculty findFacultyById(Long id);
 
     Optional<Faculty> findById (Long id);
+
+    Faculty deleteFacultyById(Long id);
 }

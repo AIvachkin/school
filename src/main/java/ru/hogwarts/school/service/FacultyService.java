@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
-import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,8 +52,9 @@ public class FacultyService {
         }
     }
 
-    public void deleteFaculty(long id) {
-        facultyRepository.deleteById(id);
+    public Faculty deleteFaculty(Long id) {
+        facultyRepository.deleteFacultyById(id);
+        return null;
     }
 
     public Collection<Faculty> getAllFaculty() {
