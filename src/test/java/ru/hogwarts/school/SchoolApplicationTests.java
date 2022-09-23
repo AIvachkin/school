@@ -77,7 +77,7 @@ class SchoolApplicationTests {
 
     }
 
-    @Test
+    @Test   //не работает
     public void testFindByAgeBetween() {
         Student student_18 = givenStudentWith("studentName3", 18);
         Student student_25 = givenStudentWith("studentName1", 25);

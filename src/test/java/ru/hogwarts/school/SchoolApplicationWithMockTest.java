@@ -1,6 +1,5 @@
 package ru.hogwarts.school;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -13,18 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.FacultyController;
-import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
-import ru.hogwarts.school.repository.StudentRepository;
-import ru.hogwarts.school.service.FacultyService;
-import ru.hogwarts.school.service.StudentService;
+import ru.hogwarts.school.service.AvatarService;
+import ru.hogwarts.school.service.FacultyServiceImpl;
+import ru.hogwarts.school.service.StudentServiceImpl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -40,8 +35,14 @@ public class SchoolApplicationWithMockTest {
     @MockBean
     private FacultyRepository facultyRepository;
 
+    @MockBean
+    private AvatarService avatarService;
+
+    @MockBean
+    private StudentServiceImpl studentService;
+
     @SpyBean
-    private FacultyService facultyService;
+    private FacultyServiceImpl facultyService;
 
     @Autowired
     private ObjectMapper objectMapper;

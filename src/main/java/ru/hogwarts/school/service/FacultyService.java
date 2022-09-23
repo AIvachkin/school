@@ -1,81 +1,21 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class FacultyService {
+public interface FacultyService {
 
-    private final FacultyRepository facultyRepository;
-
-//    private final StudentRepository studentRepository;
-
-    public FacultyService(FacultyRepository facultyRepository) {
-        this.facultyRepository = facultyRepository;
-    }
-
-//    public FacultyService(FacultyRepository facultyRepository) {
-//        this.facultyRepository = facultyRepository;
-//    }
-
-    public Faculty createFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
-    }
-
-    public Faculty findFaculty(long id) {
-        return facultyRepository.findFacultyById(id);
-    }
-
-    public Faculty editFaculty(long id, Faculty faculty) {
-//        if (faculties.containsKey(faculty.getId())) {
-//            faculties.put(faculty.getId(), faculty);
-//        if (faculties.containsKey(id)) {
-//            faculties.put(id, faculty);
-//            return faculty;
-//        }
-//        return null;
-
-        Optional<Faculty> optional = facultyRepository.findById(id);
-        if (optional.isPresent()) {
-            Faculty fromDb = optional.get();
-            fromDb.setName(faculty.getName());
-            fromDb.setColor(faculty.getColor());
-            return facultyRepository.save(fromDb);
-        } else {
-            return null;
-        }
-    }
-
-    public Faculty deleteFaculty(Long id) {
-        facultyRepository.deleteFacultyById(id);
-        return null;
-    }
-
-    public Collection<Faculty> getAllFaculty() {
-//        return faculties.values();
-        return facultyRepository.findAll();
-    }
-
-    public List<Faculty> findFacultyByColor(String color) {
-        return facultyRepository.findByColor(color);
-    }
-
-    public List<Faculty> findFacultyByColorOrName(String colorOrName) {
-        return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(colorOrName, colorOrName);
-    }
-
-    public List<Student> findStudentsByFaculty(Long id) {
-        return facultyRepository.findFacultyById(id).getStudent();
-    }
+    ResponseEntity<Faculty> createFaculty (Faculty faculty);
+    ResponseEntity<Faculty> getFacultyById (Long id);
+    ResponseEntity<Faculty> updateFaculty (Faculty faculty);
+    ResponseEntity<Faculty> removeFaculty (Long id);
+    List<Faculty> getFacultiesByColor (String color);
+    Collection<Faculty> getAll ();
+    List<Faculty> findFacultyByColorOrName (String str);
+//    ResponseEntity<String> getFacultyNameWithMaxLength ();
 
 
-//    public Faculty findFacultyByIdStudent (int idStudent){
-//        return facultyRepository.findByStudent(idStudent);
-//    }
 }

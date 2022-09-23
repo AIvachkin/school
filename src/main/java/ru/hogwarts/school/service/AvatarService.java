@@ -6,9 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
-import ru.hogwarts.school.repository.StudentRepository;
 
 import javax.imageio.ImageIO;
+import javax.transaction.Transactional;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -18,22 +18,24 @@ import java.nio.file.Path;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
+@Transactional
 public class AvatarService {
 
     private final AvatarRepository avatarRepository;
-    private final StudentService studentService;
+    private final StudentServiceImpl studentServiceImpl;
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
-    public AvatarService(AvatarRepository avatarRepository, StudentService studentService) {
+    public AvatarService(AvatarRepository avatarRepository, StudentServiceImpl studentServiceImpl) {
         this.avatarRepository = avatarRepository;
-        this.studentService = studentService;
+        this.studentServiceImpl = studentServiceImpl;
     }
 
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
-        Student student = studentService.findStudent(studentId);
+        Student student = studentServiceImpl.findStudent(studentId);
+
         Path filePath = Path.of(avatarsDir, student + "." +
                 getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -54,6 +56,7 @@ public class AvatarService {
         avatar.setMediaType(avatarFile.getContentType());
 //        avatar.setData(avatarFile.getBytes());
         avatar.setData(generateDataForDB(filePath));
+
         avatarRepository.save(avatar);
     }
 
@@ -80,7 +83,8 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long studentId) {
-        return avatarRepository.findByStudentId(studentId).orElseGet(Avatar::new);
+//        return avatarRepository.findByStudentId(studentId).orElseGet(Avatar::new);
+        return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
 }

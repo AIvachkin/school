@@ -6,31 +6,29 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.service.StudentService;
+import ru.hogwarts.school.service.StudentServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
 
-    private final StudentService studentService;
+    private final StudentServiceImpl studentServiceImpl;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    public StudentController(StudentServiceImpl studentServiceImpl) {
+        this.studentServiceImpl = studentServiceImpl;
     }
 
     @GetMapping("/all")
     public ResponseEntity<Collection<Student>> getAllStudents() {
-        return ResponseEntity.ok(studentService.getAllStudents());
+        return ResponseEntity.ok(studentServiceImpl.getAllStudents());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
-        Student student = studentService.findStudent(id);
+        Student student = studentServiceImpl.findStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
@@ -40,7 +38,7 @@ public class StudentController {
     @GetMapping()
     public ResponseEntity<Collection<Student>> getStudentByAge(@RequestParam(required = false) Integer age) {
         if (age > 0) {
-            return ResponseEntity.ok(studentService.findStudentByAge(age));
+            return ResponseEntity.ok(studentServiceImpl.findByAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
@@ -48,7 +46,7 @@ public class StudentController {
     @GetMapping("/ageBetween")
     public Collection<Student> getStudentsByAgeBetween(@RequestParam Integer ageMin,
                                                        @RequestParam Integer ageMax) {
-        return studentService.findStudentByAgeBetween(ageMin, ageMax);
+        return studentServiceImpl.findStudentByAgeBetween(ageMin, ageMax);
     }
 
 //    @GetMapping("/{id}/faculty")
@@ -58,7 +56,7 @@ public class StudentController {
 
     @GetMapping("/{id}/faculty")
     public Faculty getFacultyByStudent(@PathVariable Long id) {
-        return studentService.findFacultyByStudent(id);
+        return studentServiceImpl.findFacultyByStudent(id);
     }
 
 //    Единый запрос по возрасту и id
@@ -91,13 +89,13 @@ public class StudentController {
         if (student.getId() !=  0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id must be empty!");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentServiceImpl.addStudent(student));
     }
 
 
     @PutMapping("/{id}")
     public ResponseEntity<Student> editStudent(@PathVariable Long id, @RequestBody Student student) {
-        Student foundStudent = studentService.editStudent(id, student);
+        Student foundStudent = studentServiceImpl.editStudent(id, student);
         if (foundStudent == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -109,7 +107,7 @@ public class StudentController {
 //        return studentService.deleteStudent(id);
 //    }
     public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
-        studentService.deleteStudent(id);
+        studentServiceImpl.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 }

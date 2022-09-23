@@ -5,6 +5,7 @@ import com.querydsl.core.types.EntityPath;
 
 import javax.annotation.processing.Generated;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,15 +20,15 @@ public class Faculty {
 
     @OneToMany(mappedBy = "faculty")
     @JsonIgnore
-    private List<Student> student;
+    private Collection<Student> students;
 
 
-    public List<Student> getStudent() {
-        return student;
+    public Collection<Student> getStudent() {
+        return students;
     }
 
     public void setStudent(List<Student> student) {
-        this.student = student;
+        this.students = students;
     }
 
     public Faculty(Long id, String name, String color) {
@@ -36,7 +37,7 @@ public class Faculty {
         this.color = color;
     }
 
-    public Faculty(){
+    public Faculty() {
 
     }
 

@@ -1,68 +1,35 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Faculty;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.io.IOException;
+import java.util.Collection;
 
-@Service
-public class StudentService {
+public interface StudentService {
 
-//    private final HashMap<Long, Student> students = new HashMap<>();
-//    private long lastIdStudents = 0;
+    Student addStudent(Student student);
 
-    private final StudentRepository studentRepository;
+    Student findStudent(long id);
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    Student editStudent(long id, Student student);
 
-    public Student createStudent(Student student) {
-//        student.setId(null);
-//        students.put(student.getId(), student);
-        return studentRepository.save(student);
-    }
+    void deleteStudent(long id);
 
-    public Student findStudent(long id) {
-        return studentRepository.findById(id).orElseThrow();
-    }
+    Collection<Student> findByAge(int age);
 
-    public Student editStudent(long id, Student student) {
-        Optional <Student> optional = studentRepository.findById(id);
-        if (optional.isPresent()) {
-            Student fromDB = optional.get();
-            fromDB.setName(student.getName());
-            fromDB.setAge(student.getAge());
-            return studentRepository.save(fromDB);
-        }
-        return null;
-    }
+//    Avatar findAvanar(long studentId);
 
-    public void deleteStudent(long id) {
-        studentRepository.deleteById(id);
-    }
+//    void uploadAvatar(Long studentId, MultipartFile file) throws IOException;
 
-    public Collection<Student> getAllStudents() {
-        return studentRepository.findAll();
-    }
+    Collection<Student> getAllStudents();
 
-    public List<Student> findStudentByAge(int age) {
-        return studentRepository.findAllByAge(age);
-    }
+//    Integer getCountOfAllStudents();
+//
+//    Double getAverageAgeOfStudents();
+//
+//    Collection<Student> getLastFiveStudents();
 
-    public List<Student> findStudentByAgeBetween(int ageMin, int ageMax){
-        return studentRepository.findByAgeBetween(ageMin, ageMax);
-    }
-
-//    public Faculty findFacultyByStudent (int idStudent){
-//        return studentRepository.findByFaculty_Id(idStudent);
-//    }
-
-    public Faculty findFacultyByStudent (Long studentId){
-        return studentRepository.findStudentById(studentId).getFaculty();
-    }
 }
-

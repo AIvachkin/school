@@ -1,44 +1,35 @@
 package ru.hogwarts.school.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.hogwarts.school.constants.StudentServiceConstants;
-import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
-
-import java.util.Objects;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static ru.hogwarts.school.constants.StudentServiceConstants.*;
 
 @ExtendWith(MockitoExtension.class)
-public class StudentServiceTest {
+public class StudentServiceImplTest {
 
 //    @Mock
 //    private final StudentRepository studentRepositoryMock = mock(StudentRepository.class);
 //
 //    @InjectMocks
-//    private StudentService out;
+//    private StudentServiceImpl out;
 //
 //    @BeforeEach
 //    public void initOut(){
-//        out = new StudentService(studentRepositoryMock);
+//        out = new StudentServiceImpl(studentRepositoryMock);
 //    }
 
     @Mock
     private final StudentRepository studentRepositoryMock = mock(StudentRepository.class);
 
     @InjectMocks
-    private StudentService studentService = new StudentService(studentRepositoryMock);
+    private StudentServiceImpl studentServiceImpl = new StudentServiceImpl(studentRepositoryMock);
 
 
 //    @Test

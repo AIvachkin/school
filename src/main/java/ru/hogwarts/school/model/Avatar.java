@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -17,7 +18,9 @@ public class Avatar {
     private String filePath, mediaType;
     private long fileSize;
 
-    @Lob
+    @Lob    //нет ограничений по длине у данного поля
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name = "data")
     private byte[] data;
 
 
