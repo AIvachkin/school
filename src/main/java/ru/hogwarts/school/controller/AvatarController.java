@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.AvatarService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/avatar")
@@ -30,7 +32,7 @@ public class AvatarController {
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar)
             throws IOException {
-        if(avatar.getSize()>1024*300){
+        if(avatar.getSize()>1024*2000){
             return ResponseEntity.badRequest().body("File is too big");
         }
         avatarService.uploadAvatar(studentId, avatar);
@@ -58,6 +60,12 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping("/avatar-all")
+    public ResponseEntity<Collection<Avatar>> getAllAvatars(@RequestParam ("page") Integer pageNumber,
+                                                            @RequestParam ("size") Integer pageSize) {
+        return ResponseEntity.ok(avatarService.getAll(pageNumber, pageSize));
     }
 
 }

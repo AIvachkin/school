@@ -1,10 +1,13 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.interfaceForSQL.AverageAgeStudents;
+import ru.hogwarts.school.interfaceForSQL.CountAllStudents;
+import ru.hogwarts.school.interfaceForSQL.LastFiveStudents;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.interfaceForSQL.CountStudentsByFaculties;
 
 import java.util.*;
 
@@ -61,6 +64,22 @@ public class StudentServiceImpl implements StudentService{
 
     public Faculty findFacultyByStudent (Long studentId){
         return studentRepository.findStudentById(studentId).getFaculty();
+    }
+
+    public List<CountStudentsByFaculties> getStudentsByCategory (){
+        return studentRepository.getStudentsByCategory();
+    }
+
+    public List<CountAllStudents> getAllStudentsBySchool (){
+        return studentRepository.getAllStudentsBySchool();
+    }
+
+    public List<AverageAgeStudents> getAverageAgeStudents (){
+        return studentRepository.getAverageAgeStudents();
+    }
+
+    public List<LastFiveStudents> getLastFiveStudents (){
+        return studentRepository.getLastFiveStudents();
     }
 }
 
