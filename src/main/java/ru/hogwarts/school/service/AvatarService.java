@@ -1,7 +1,10 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
@@ -26,6 +29,8 @@ public class AvatarService {
 
     private final AvatarRepository avatarRepository;
     private final StudentServiceImpl studentServiceImpl;
+
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -94,5 +99,19 @@ public class AvatarService {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
+
+//    альтернатива
+
+//    public ResponseEntity<Collection<Avatar>> getAll(Integer pageNumber, Integer pageSize) {
+//        logger.info("method to get all of avatars was invoked");
+//        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+//        Collection<Avatar> avatarsList = avatarRepository.findAll(pageRequest).getContent();
+//        if (avatarsList.isEmpty()) {
+//            logger.error("There is no avatar");
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(avatarsList);
+//    }
+
 
 }
