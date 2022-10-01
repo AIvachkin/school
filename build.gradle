@@ -19,6 +19,7 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa:5.0.0'
 	implementation 'com.querydsl:querydsl-core:5.0.0'
 	implementation 'com.h2database:h2:2.1.214'
+	implementation 'org.liquibase:liquibase-core'
 
     runtimeOnly 'org.postgresql:postgresql:42.4.1'
 
