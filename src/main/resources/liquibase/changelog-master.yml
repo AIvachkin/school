@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file:liquibase/scripts/lesson-four-three.sql
+      file: liquibase/scripts/lesson-four-three.sql
 
 
 
