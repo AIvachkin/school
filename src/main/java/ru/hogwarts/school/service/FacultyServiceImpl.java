@@ -82,18 +82,22 @@ public class FacultyServiceImpl implements FacultyService {
 
     public Collection<Faculty> getAll() {
 //        return faculties.values();
+        logger.info("Was invoked method to get all faculty");
         return facultyRepository.findAll();
     }
 
     public List<Faculty> getFacultiesByColor(String color) {
+        logger.info("Was invoked method to find faculty by color = {}", color);
         return facultyRepository.findByColor(color);
     }
 
     public List<Faculty> findFacultyByColorOrName(String colorOrName) {
+        logger.info("Was invoked method to find faculty by color or name: {}", colorOrName);
         return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(colorOrName, colorOrName);
     }
 
     public Collection<Student> findStudentsByFaculty(Long id) {
+        logger.info("Was invoked method to find students by faculty id = {}", id);
         return facultyRepository.findFacultyById(id).getStudent();
     }
 
