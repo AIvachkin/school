@@ -12,9 +12,10 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.interfaceForSQL.CountStudentsByFaculties;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 //    private final AvatarRepository avatarRepository;
@@ -39,7 +40,7 @@ public class StudentServiceImpl implements StudentService{
 
     public Student editStudent(long id, Student student) {
         logger.info("Was invoked method to edit student by id = {}", id);
-        Optional <Student> optional = studentRepository.findById(id);
+        Optional<Student> optional = studentRepository.findById(id);
         if (optional.isPresent()) {
             Student fromDB = optional.get();
             fromDB.setName(student.getName());
@@ -65,7 +66,7 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.findAllByAge(age);
     }
 
-    public List<Student> findStudentByAgeBetween(int ageMin, int ageMax){
+    public List<Student> findStudentByAgeBetween(int ageMin, int ageMax) {
         logger.info("Was invoked method to find student by age between {} and {} ", ageMin, ageMax);
         return studentRepository.findByAgeBetween(ageMin, ageMax);
     }
@@ -74,29 +75,64 @@ public class StudentServiceImpl implements StudentService{
 //        return studentRepository.findByFaculty_Id(idStudent);
 //    }
 
-    public Faculty findFacultyByStudent (Long studentId){
+    public Faculty findFacultyByStudent(Long studentId) {
         logger.info("Was invoked method to find faculty by student id = {}", studentId);
         return studentRepository.findStudentById(studentId).getFaculty();
     }
 
-    public List<CountStudentsByFaculties> getStudentsByCategory (){
+    public List<CountStudentsByFaculties> getStudentsByCategory() {
         logger.info("Was invoked method for get all students by category");
         return studentRepository.getStudentsByCategory();
     }
 
-    public List<CountAllStudents> getAllStudentsBySchool (){
+    public List<CountAllStudents> getAllStudentsBySchool() {
         logger.info("Was invoked method for get all students by school");
         return studentRepository.getAllStudentsBySchool();
     }
 
-    public List<AverageAgeStudents> getAverageAgeStudents (){
+    public List<AverageAgeStudents> getAverageAgeStudents() {
         logger.info("Was invoked method for get average age students");
         return studentRepository.getAverageAgeStudents();
     }
 
-    public List<LastFiveStudents> getLastFiveStudents (){
+    public List<LastFiveStudents> getLastFiveStudents() {
         logger.info("Was invoked method for get last five students");
         return studentRepository.getLastFiveStudents();
     }
+
+    public List<String> getAllStudentsByLetter(Character letter) {
+        logger.info("Was invoked method for get all students by letter");
+        return studentRepository.findAll().stream()
+                .sorted(Comparator.comparing(Student::getName))
+                .filter(s -> s.getName().charAt(0) == letter)
+                .map(s -> s.getName().toUpperCase())
+                .collect(Collectors.toList())
+                ;
+
+//        return studentRepository.findAll().stream()
+//                .map(s -> s.getName())
+//                .map(s -> s.toUpperCase())
+//                .filter(s -> s.startsWith("A"))
+//                .sorted()
+//                .collect(Collectors.toList());
+
+    }
+
+
+    public OptionalDouble getAverageAgeAllStudents() {
+        logger.info("Was invoked method for get average age all students");
+        return studentRepository.findAll().stream()
+                .mapToInt(s -> s.getAge())
+                .average();
+
+//        public Double ...(){
+//        return studentRepository.findAll().stream()
+//                .mapToInt(Student::getAge)
+//                .average()
+//                  .orElse
+
+
+    }
 }
+
 

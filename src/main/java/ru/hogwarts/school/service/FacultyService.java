@@ -17,5 +17,5 @@ public interface FacultyService {
     List<Faculty> findFacultyByColorOrName (String str);
 //    ResponseEntity<String> getFacultyNameWithMaxLength ();
 
-
+    ResponseEntity<String> findLongestNameFaculty();
 }

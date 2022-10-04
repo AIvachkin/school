@@ -57,6 +57,11 @@ public class FacultyController {
         return facultyServiceImpl.findStudentsByFaculty(id);
     }
 
+    @GetMapping("/longest-name")
+    public ResponseEntity<String> getLongestNameFaculty() {
+        return facultyServiceImpl.findLongestNameFaculty();
+    }
+
 //    @GetMapping("/idStudent")
 //    public Faculty findFacultyByIdStudent (@RequestParam int idStudent) {
 //        return facultyService.findFacultyByIdStudent(idStudent);

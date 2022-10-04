@@ -7,6 +7,8 @@ import ru.hogwarts.school.model.Student;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.OptionalDouble;
 
 public interface StudentService {
 
@@ -25,6 +27,10 @@ public interface StudentService {
 //    void uploadAvatar(Long studentId, MultipartFile file) throws IOException;
 
     Collection<Student> getAllStudents();
+
+    List<String> getAllStudentsByLetter(Character letter);
+
+    OptionalDouble getAverageAgeAllStudents();
 
 //    Integer getCountOfAllStudents();
 //
