@@ -118,11 +118,55 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    public void getNameStudentInConsole() {
+        List<Student> studentsForConsole = studentRepository.findAll();
+
+        System.out.println("поток 1: " + studentsForConsole.get(0));
+        System.out.println("поток 1: " + studentsForConsole.get(1));
+
+        new Thread(() -> {
+            System.out.println("поток 2: " + studentsForConsole.get(2));
+            System.out.println("поток 2: " + studentsForConsole.get(3));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println("поток 3: " + studentsForConsole.get(4));
+            System.out.println("поток 3: " + studentsForConsole.get(5));
+        }).start();
+    }
+
+    public void getNameStudentInConsoleSynchr() {
+
+        List<Student> studentsForConsoleSynchr = studentRepository.findAll();
+
+        printInConsole(studentsForConsoleSynchr, 1, 0);
+        printInConsole(studentsForConsoleSynchr, 1, 1);
+
+
+        new Thread(() -> {
+            printInConsole(studentsForConsoleSynchr, 2, 2);
+            printInConsole(studentsForConsoleSynchr, 2, 3);
+
+
+        }).start();
+
+        new Thread(() -> {
+            printInConsole(studentsForConsoleSynchr, 3, 4);
+            printInConsole(studentsForConsoleSynchr, 3, 5);
+
+        }).start();
+    }
+
+
+
+    public synchronized void printInConsole(List<Student> students, int thread, int index) {
+        System.out.println("поток " + thread + ":" + students.get(index));
+    }
 
     public OptionalDouble getAverageAgeAllStudents() {
         logger.info("Was invoked method for get average age all students");
         return studentRepository.findAll().stream()
-                .mapToInt(s -> s.getAge())
+                .mapToInt(Student::getAge)
                 .average();
 
 //        public Double ...(){

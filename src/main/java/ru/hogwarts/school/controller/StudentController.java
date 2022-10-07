@@ -70,6 +70,16 @@ public class StudentController {
         return studentServiceImpl.findFacultyByStudent(id);
     }
 
+    @GetMapping("/names-students-console")
+    public void getNameStudentInConsole (){
+        studentServiceImpl.getNameStudentInConsole();
+    }
+
+    @GetMapping("/names-students-console-synchr")
+    public void getNameStudentInConsoleSynchr (){
+        studentServiceImpl.getNameStudentInConsoleSynchr();
+    }
+
 //    Единый запрос по возрасту и id
 //    @GetMapping()
 //    public ResponseEntity getStudentByAgeOrById(@RequestParam(required = false) int age,

@@ -1,11 +1,8 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.model.Avatar;
+
 import ru.hogwarts.school.model.Student;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -31,6 +28,9 @@ public interface StudentService {
     List<String> getAllStudentsByLetter(Character letter);
 
     OptionalDouble getAverageAgeAllStudents();
+
+    void getNameStudentInConsole ();
+    void getNameStudentInConsoleSynchr();
 
 //    Integer getCountOfAllStudents();
 //
