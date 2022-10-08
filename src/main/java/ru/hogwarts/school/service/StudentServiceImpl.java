@@ -139,28 +139,28 @@ public class StudentServiceImpl implements StudentService {
 
         List<Student> studentsForConsoleSynchr = studentRepository.findAll();
 
-        printInConsole(studentsForConsoleSynchr, 1, 0);
-        printInConsole(studentsForConsoleSynchr, 1, 1);
+        printInConsole(studentsForConsoleSynchr, 1, 0, 1);
+//        printInConsole(studentsForConsoleSynchr, 1, 1);
 
 
         new Thread(() -> {
-            printInConsole(studentsForConsoleSynchr, 2, 2);
-            printInConsole(studentsForConsoleSynchr, 2, 3);
+            printInConsole(studentsForConsoleSynchr, 2, 2, 3);
+//            printInConsole(studentsForConsoleSynchr, 2, 3);
 
 
         }).start();
 
         new Thread(() -> {
-            printInConsole(studentsForConsoleSynchr, 3, 4);
-            printInConsole(studentsForConsoleSynchr, 3, 5);
+            printInConsole(studentsForConsoleSynchr, 3, 4, 5);
+//            printInConsole(studentsForConsoleSynchr, 3, 5);
 
         }).start();
     }
 
 
 
-    public synchronized void printInConsole(List<Student> students, int thread, int index) {
-        System.out.println("поток " + thread + ":" + students.get(index));
+    public synchronized void printInConsole(List<Student> students, int thread, int index1, int index2) {
+        System.out.println("поток " + thread + ": " + students.get(index1) + " , " + students.get(index2));
     }
 
     public OptionalDouble getAverageAgeAllStudents() {
